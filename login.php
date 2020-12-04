@@ -1,7 +1,8 @@
+<?php include('server.php') ?>
 <!DOCTYPE HTML>  
 <html>
 <head>
-    <title>Registration</title>
+    <title>Log in</title>
 </head>
 <body>
 
