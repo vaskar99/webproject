@@ -15,7 +15,7 @@
         </div>
         <form action="registration.php" method="POST">
 
-        <?php include('errors.php') ?>
+        <?php include('errors.php') //Include error display file. ?>
 
             <div>
 

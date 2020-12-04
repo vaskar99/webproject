@@ -120,21 +120,95 @@ if(isset($_POST['login_user']))
             else
             {
                 array_push($errors,"Wrong username or password. Please try again!");
-                echo "Wrong username or password. Please try again!";
             }
         }
         else
         {
             array_push($errors,"Wrong username or password. Please try again!");
-            echo "Wrong username or password. Please try again!";
         }
     } 
 }
 
+//Change user settings
 
+if(isset($_POST['sub_changes']))
+{
+    $username = $_SESSION['username'];
+    $username_new = mysqli_real_escape_string($db, $_POST['username']);
+    $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
+    $password_check = mysqli_real_escape_string($db, $_POST['password_2']);
+    
+    //Check password requirments.
+    $uppercase = preg_match('@[A-Z]@', $password_1);
+    $lowercase = preg_match('@[a-z]@', $password_1);
+    $number    = preg_match('@[0-9]@', $password_1);
+    $specialChars = preg_match('@[^\w]@', $password_1);
 
+    if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password_1) < 8)
+    {
+        array_push($errors,"Password must contain at least 8 characters and should include at least one upper case letter, one number, and one special character.");
+    }
+      
+    //Error checking for empty fields or mismatched passwords.
+    if(empty($username_new))
+    {
+        array_push($errors,"Username is required");
+    }
+    if(empty($password_1))
+    {
+        array_push($errors,"Password is required");
+    }
+    if($password_1 != $password_check)
+    {
+        array_push($errors, "Passwords need to be the same");
+    }
+    //Case if user wants to change only his password.
+    if($username == $username_new)
+    {
+        if(count($errors) == 0)
+        {
+            $password = password_hash($password_1, PASSWORD_DEFAULT);
+            $query = "UPDATE user SET username ='$username_new', password ='$password' WHERE username ='$username'";
+            if(mysqli_query($db, $query))
+            {
+                $_SESSION['username'] = $username_new;
+                header('location: index.php');
+            }
+            else
+            {
+                array_push($errors,"Operation failed. Please try again.");
+            }
+        }
+    }
+    else //Case where user wants to change both username and password. Proper username check with database to avoid duplicates.
+    {
+        //Check if the username already exists.
+        $user_check_query = "SELECT * FROM user WHERE username = '$username_new' LIMIT 1";
 
+        $results = mysqli_query($db, $user_check_query);
+        $user = mysqli_fetch_assoc($results);
 
-
-
+        if($user)
+        {
+            if($user['username'] == $username_new)
+            {
+                array_push($errors,"Username already exists");
+            }
+        }
+        if(count($errors) == 0)
+        {
+            $password = password_hash($password_1, PASSWORD_DEFAULT);
+            $query = "UPDATE user SET username ='$username_new', password ='$password' WHERE username ='$username'";
+            if(mysqli_query($db, $query))
+            {
+                $_SESSION['username'] = $username_new;
+                header('location: index.php');
+            }
+            else
+            {
+                array_push($errors,"Operation failed. Please try again.");
+            }
+        }
+    }
+}
 ?>

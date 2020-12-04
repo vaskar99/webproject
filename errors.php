@@ -1,3 +1,4 @@
+<?php //Error file. Usage -> Display error messages to user depending on case. ?>
 <?php if(count($errors) > 0) : ?>
     <div>
     

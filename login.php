@@ -15,6 +15,8 @@
         </div>
         <form action="login.php" method="POST">
 
+        <?php include('errors.php') //Include error display file. ?>
+
             <div>
 
                 <label for="username">Username : </label>

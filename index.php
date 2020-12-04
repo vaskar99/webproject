@@ -48,6 +48,11 @@ if(isset($_GET['logout']))
 
         <?php if(isset($_SESSION['username'])) : ?>
             <h3>Welcome <strong><?php echo $_SESSION['username']; ?></strong></h3>
+            <h3>What would you like to do?</h3>
+            <button><a href="changeInfo.php">Profile Settings</a></button>
+            
+            
+            
             <button><a href="index.php?logout=1">Logout</a></button>          
         <?php endif ?>
     </div>
