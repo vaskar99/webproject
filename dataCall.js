@@ -1,23 +1,37 @@
-function checkData(name,pass)
+$(document).ready(function() 
 {
-    if(name || pass =='')
+    //Process the form
+    $('registration').submit(function(event)
     {
-        document.getElementById("textHint").innerHTML ="";
-        return;
-    }
-    else
-    {
-        var xmlhttp = XMLHttpRequest();
-        xmlhttp.onreadystatechange = function()
+        const form =
         {
-            if (this.readyState == 4 && this.status ==200)
-            {
-                document.getElementById("textHint").innerHTML = this.responseText;
-            }
+            username : document.getElementById('username'),
+            email : document.getElementById('email'),
+            password_1 : document.getElementById('password_1'),
+            password_2 : document.getElementById('password_2')
         };
-        xmlhttp.open("POST","Welcome.php?inputname=vaskar",true);
-        xmlhttp.send();
-        xmlhttp.open("POST","Welcome.php?inputpass=1234",true);
-        xmlhttp.send();
-    }
-}
+        console.log(form);
+        event.preventDefault();
+        //Process the form
+        $.ajax
+        ({
+            type        : 'POST',
+            url         : 'ajax_process.php', // the url where we want to POST
+            data        : $(this).serialize(), 
+            success: function(response)
+            {
+                var jsonData = JSON.parse(response);
+                if (jsonData.success == "1")
+                {
+                    location.href = 'index.php';
+                }
+                else
+                {
+                    alert('Error!');
+                }
+            }
+        });         
+    });
+});
+
+
