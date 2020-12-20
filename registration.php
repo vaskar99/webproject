@@ -12,12 +12,14 @@
                   var email = $("#email").val();
                   var password_1 = $("#password_1").val();
                   var password_2 = $("#password_2").val();
+                  var reg_user = $("#reg_user").val();
 
                   $(".form-message").load("registration.php", {
                       username : username,
                       email : email,
                       password_1 : password_1,
-                      password_2 : password_2
+                      password_2 : password_2,
+                      reg_user : reg_user
                       
                   });
               });
