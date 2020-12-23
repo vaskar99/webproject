@@ -1,18 +1,17 @@
-
 <html>
 <body>            
-	<form name="login" method="post"> 
+	<form name="register" method="post"> 
 
-	    <div>		 	                    			
-    	<input type="text" name="username" placeholder="Username"/><br />		
-		</div>	
-		<div>													
-		<input type="password" name="password" placeholder="Password"/> <br />	
-		</div>	
-		<div>						                         
-        <button  type="submit" name="login" id="login">Login</button>
-		</div>					
-		
+	    <div>
+            <input type="text" name="username" placeholder="Username"  />         
+            </div>
+            <div>
+            <input type="email" name="email" placeholder="Email"  />
+            </div>
+            <div>
+            <input type="password" name="password" placeholder="Password"  />
+            </div>
+            <button  type="submit" name ="register" id="register">Sign Up</button>    
 	</form>    
 
 <!-- insert the jquery library -->  
@@ -22,9 +21,10 @@
 //when we press the Login button
     $(document).ready(function () 
 {
-    $("#login").on('click',function () 
+    $("#register").on('click',function () 
     {
             let username = $("#username").val();
+            let email = $('#email').val();
             let password = $("#password").val(); 
 			$.ajax(
                 {
@@ -32,8 +32,9 @@
                     type: 'POST',
                     data: 
                     {
-                        login:1,
+                        register:1,
                         'username': username,
+                        'email': email,
 						'password': password
                     },
                     success: function(response) 
@@ -43,13 +44,13 @@
                         console.log(typeof data)
                         if(data.response==true)
                         {
-                            alert("Success!Logged in.")
-                            window.location.href = "index.php"
+                            alert("Success!Log in using the info you submited.")
+                            window.location.href = "login.php"
                             console.log("Komple");
                         }
                         else
                         {
-                            alert("Unsuccessful login.")
+                            alert("Unsuccessful registration.")
                             console.log("Rip")
                         }
                     },    
@@ -60,6 +61,6 @@
 </script>
     
 	<p id = "response"></p>
-	<p>Want to sign up?<a href="register.php"><b>Sign Up</b></a></p>
+	<p>Want to login?<a href="login.php"><b>Login</b></a></p>
 </body>
 </html>
