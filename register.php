@@ -1,7 +1,7 @@
 <?php                     
    //make sure none of the fields are empty 
     while(!empty($_POST['username']) || !empty($_POST['email']) || !empty($_POST['password'])){   
-        $connection = new mysqli("localhost", "root", "", "web_prod");
+        $connection = new mysqli("localhost", "root", "", "web_test");
 		
 		$username = $connection->real_escape_string($_POST['username']);  				
 		$email = $connection->real_escape_string($_POST['email']);  

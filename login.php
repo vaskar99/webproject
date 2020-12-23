@@ -8,7 +8,7 @@
 	    }
 
 	if(!empty($_POST['username'])){
-		$connection = new mysqli("localhost", "root", "", "web_prod");
+		$connection = new mysqli("localhost", "root", "", "web_test");
 		
 		$username = $connection->real_escape_string($_POST['username']);
 		$password = sha1($connection->real_escape_string($_POST['password']));
